@@ -153,7 +153,7 @@ main {
 .product-description {
   font-weight: 200;
   font-size: 16px;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 
 .product img {
@@ -163,4 +163,16 @@ main {
 .error-message {
   color: red;
   font-size: 14px;
+}
+
+#left{
+  text-align: left;
+}
+
+#right{
+  text-align: right;
+}
+
+#justify{
+  text-align: justify;
 }
