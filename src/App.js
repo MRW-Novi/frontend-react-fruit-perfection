@@ -1,4 +1,5 @@
 import React from 'react';
+import {useForm} from "react-hook-form";
 import Product from "./Product";
 import './App.css';
 import citroenen from './assets/citroenen.jpeg'
@@ -7,6 +8,22 @@ import ijsblokjes from './assets/ijsblokjes.jpg'
 import {ReactComponent as ShoppingCart} from "./assets/winkelmandje.svg";
 
 function App() {
+
+    // const [messageValue, setMessageValue] = React.useState('');
+    // const [checkedTerms, toggleCheckedTerms] = React.useState(false);
+    // const [submitted, setSubmitted] = React.useState(false);
+
+    const {handleSubmit, register, errors} = useForm(); //TODO hoe werkt destructureren precies? pre-defined positiones of op basis van reference naam?
+
+    function onFormSubmit(data){
+        console.log(data);
+    }
+
+    // function sendForm(e) {
+        // console.log(`Het bericht: "${messageValue}" is succesvol verzonden`);
+        // setSubmitted(true);
+    // }
+
     return (
         <>
             <nav>
@@ -52,6 +69,58 @@ function App() {
                     position={"right"}
                 />
             </main>
+            <footer>
+                <div className={"form-container"}>
+                    <h2>Contactformulier</h2>
+                    <form onSubmit={handleSubmit(onFormSubmit)}>
+                        <input
+                            type="text"
+                            placeholder={"Jouw bericht hier"}
+                            name={"message"}
+                            // onChange={()=>console.log(errors.message)}
+                            ref={register(
+                                {
+                                    required: {
+                                        value: true,
+                                        message: "dit veld mag niet leeg zijn"
+                                    },
+                                    validate: (value) => value.includes('@'),
+                                    maxLength: {
+                                        value: 19,
+                                        message: "max 19 characters"
+                                    }
+                                }
+                            )}
+                        />
+                        {errors.message && <p>{errors.message.message}</p>}
+                        <label htmlFor="terms-and-conditions">
+                            <input
+                                type="checkbox"
+                                name={"terms-and-conditions"}
+                                id={"terms-and-conditions"}
+                                ref={register(
+                                    {
+                                        required:{
+                                            value: true,
+                                            message: "algemene voorwaarden accepteren"
+                                        }
+                                    }
+                                )}
+                            />
+
+                            Ik ga akkoord met de algemene voorwaarden
+                        </label>
+                    <button
+                        type={"submit"}
+                        // disabled={!checkedTerms}
+                        // onClick={sendForm}
+                    >
+                        Verstuur
+                    </button>
+                    </form>
+
+                </div>
+            </footer>
         </>
     );
 }
